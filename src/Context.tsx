@@ -89,13 +89,13 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
     setFilteredItems(result);
   };
 
-  const debounceRef = useRef<NodeJS.Timeout>();
+  const debounceRef = useRef<number | undefined>();
 
   const searchItems = (query: string) => {
-    if (debounceRef.current) {
-      clearTimeout(debounceRef.current);
+    if (debounceRef.current !== undefined) {
+      window.clearTimeout(debounceRef.current);
     }
-    debounceRef.current = setTimeout(() => {
+    debounceRef.current = window.setTimeout(() => {
       setSearchQuery(query);
       applyFilters(items, query, currentFilter);
     }, 300);
